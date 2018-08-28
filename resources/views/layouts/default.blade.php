@@ -4,6 +4,9 @@
     <title>@yield('title', 'Sample App') - Laravel 入门教程</title>
     <link rel="stylesheet" href="/css/web.css">
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+
 </head>
 <body>
 @include('layouts._header')
