@@ -9,6 +9,7 @@ class StaticPagesController extends Controller
     public function home()
     {
 //        return '主页';
+        \Log::info('1');
         return view('static_pages/home');
     }
 
