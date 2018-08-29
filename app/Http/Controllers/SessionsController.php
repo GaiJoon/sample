@@ -9,6 +9,7 @@ use Auth;
 class SessionsController extends Controller
 {
 
+
     public function __construct()
     {
         $this->middleware('guest', [
@@ -28,11 +29,6 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
 
-        $user =  $request->only('email','password');
-
-//        $email = $request->input(email);
-//        $password = $request->input(password);
-//            dd(Auth::check());
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             if(Auth::user()->activated) {
@@ -43,6 +39,7 @@ class SessionsController extends Controller
                 session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
                 return redirect('/');
             }
+
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return redirect()->back();

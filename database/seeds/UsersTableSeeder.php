@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -18,6 +19,8 @@ class UsersTableSeeder extends Seeder
         $user->name = 'Aufree';
         $user->email = 'aufree@yousails.com';
         $user->password = bcrypt('password');
+        $user->is_admin = true;
+        $user->activated = true;
         $user->save();
     }
 }
