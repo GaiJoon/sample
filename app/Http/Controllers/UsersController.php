@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\DocBlock;
 
 class UsersController extends BaseController
@@ -43,7 +44,10 @@ class UsersController extends BaseController
 
     public function show(User $user)
     {
-        return view('users.show',compact('user'));
+        $statuses = $user->statuses()
+                            ->orderBy('created_at','desc')
+                            ->paginate(30);
+        return view('users.show',compact('user','statuses'));
     }
 
     public function store(Request $request)
@@ -69,15 +73,15 @@ class UsersController extends BaseController
 
     protected function sendEmailConfirmationTo($user)
     {
-//        dd($user['name']);
         $view = 'emails.confirm';
         $data = compact('user');
         $to = $user->email;
         $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
 
-        \Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-            $message->from($from, $name)->to($to)->subject($subject);
+        \Mail::send($view, $data, function ($message) use ($to, $subject) {
+            $message->to($to)->subject($subject);
         });
+
     }
 
     public function edit(User $user)
